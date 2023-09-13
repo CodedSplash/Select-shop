@@ -11,7 +11,10 @@ const useGetProducts = () => {
 		fetch('https://fakestoreapi.com/products')
 			.then((res: Response) => res.json())
 			.then((res: IProduct[]) => setProducts(res))
-			.catch((err: Error) => setError(err.message))
+			.catch((err: Error) => {
+				setError(err.message)
+				setTimeout(() => setError(''), 5000)
+			})
 			.finally(() => setLoading(false))
 	}, [])
 
