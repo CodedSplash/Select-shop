@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const useDebounce = (
 	fn: () => void,
@@ -7,13 +7,13 @@ const useDebounce = (
 ) => {
 	const timerRef = useRef(0)
 
-	const debounceFunction = useCallback(() => {
+	const debounceFunction = () => {
 		if (timerRef.current) {
 			clearTimeout(timerRef.current)
 		}
 
 		timerRef.current = setTimeout(fn, timeout)
-	}, [fn, timeout])
+	}
 
 	useEffect(() => {
 		debounceFunction()
