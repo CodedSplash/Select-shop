@@ -30,29 +30,42 @@ const App: FC = () => {
 					document.body,
 				)}
 
-			{loading && (
-				<Grid
-					container
-					direction={'row'}
-					justifyContent='center'
-					alignItems='center'
-					sx={{ height: '100vh' }}
-				>
-					<CircularProgress />
-				</Grid>
-			)}
+			{loading &&
+				createPortal(
+					<Grid
+						container
+						direction={'row'}
+						justifyContent='center'
+						alignItems='center'
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							zIndex: 10,
+							height: '100%',
+							width: '100%',
+							backgroundColor: '#fff',
+							overflow: 'hidden',
+						}}
+					>
+						<CircularProgress />
+					</Grid>,
+					document.body,
+				)}
 
-			{products.length && (
-				<Container
-					maxWidth={'md'}
-					sx={{ paddingTop: '15px', paddingBottom: '15px' }}
-				>
-					<div className={styles.search}>
-						<ProductSearch handleSearch={handleSearch} />
-					</div>
-					<ProductList products={filteredProducts} />
-				</Container>
-			)}
+			<Container
+				maxWidth={'md'}
+				sx={{ paddingTop: '15px', paddingBottom: '15px' }}
+			>
+				{products.length && (
+					<>
+						<div className={styles.search}>
+							<ProductSearch handleSearch={handleSearch} />
+						</div>
+						<ProductList products={filteredProducts} />
+					</>
+				)}
+			</Container>
 		</>
 	)
 }
