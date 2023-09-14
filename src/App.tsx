@@ -1,20 +1,35 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { Alert, CircularProgress, Container, Grid } from '@mui/material'
+import {
+	Alert,
+	CircularProgress,
+	Container,
+	Grid,
+	SelectChangeEvent,
+} from '@mui/material'
 import ProductList from './components/ProductList/ProductList.tsx'
 import ProductSearch from './components/ProductSearch/ProductSearch.tsx'
+import SortProducts from './components/sortProducts/SortProducts.tsx'
 import styles from './App.module.css'
 import useGetProducts from './hooks/useGetProducts.tsx'
 import { createPortal } from 'react-dom'
 import useSearch from './hooks/useSearch.ts'
+import useSortProducts from './hooks/useSortProducts.ts'
+import { sortTypeModel } from './models/SortType.model.ts'
 
 const App: FC = () => {
 	const [inputSearch, setInputSearch] = useState('')
+	const [sortType, setSortType] = useState<sortTypeModel>('title')
 
 	const { products, error, loading } = useGetProducts()
 	const filteredProducts = useSearch(products, inputSearch)
+	const sortProducts = useSortProducts(filteredProducts, sortType)
 
 	const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputSearch(event.target.value)
+	}
+
+	const handleSortType = (event: SelectChangeEvent) => {
+		setSortType(event.target.value as sortTypeModel)
 	}
 
 	return (
@@ -62,7 +77,13 @@ const App: FC = () => {
 						<div className={styles.search}>
 							<ProductSearch handleSearch={handleSearch} />
 						</div>
-						<ProductList products={filteredProducts} />
+						<div className={styles.sort}>
+							<SortProducts
+								sortTypeValue={sortType}
+								handleSortTypeValue={handleSortType}
+							/>
+						</div>
+						<ProductList products={sortProducts} />
 					</>
 				)}
 			</Container>

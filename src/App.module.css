@@ -3,3 +3,8 @@
 	margin: 0 auto;
 	padding-bottom: 20px;
 }
+
+.sort {
+	display: inline-block;
+	padding-bottom: 15px;
+}

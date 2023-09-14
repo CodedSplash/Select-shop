@@ -6,15 +6,13 @@ import { IProductListProps } from './ProductList.interface.ts'
 
 const ProductList: FC<IProductListProps> = ({ products }) => {
 	return (
-		<>
-			<Grid container spacing={2}>
-				{products.map((product: IProduct) => (
-					<Grid item xs={6} sx={{ display: 'flex' }} key={product.id}>
-						<ProductCard product={product} />
-					</Grid>
-				))}
-			</Grid>
-		</>
+		<Grid container spacing={2}>
+			{products.map((product: IProduct) => (
+				<Grid item xs={6} sx={{ display: 'flex' }} key={product.id}>
+					<ProductCard product={product} />
+				</Grid>
+			))}
+		</Grid>
 	)
 }
 
