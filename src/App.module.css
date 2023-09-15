@@ -5,6 +5,7 @@
 }
 
 .sort {
-	display: inline-block;
+	display: flex;
+	column-gap: 15px;
 	padding-bottom: 15px;
 }

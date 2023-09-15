@@ -8,7 +8,7 @@ const SortProducts: FC<ISortProductsProps> = ({
 }) => {
 	return (
 		<>
-			<FormControl fullWidth>
+			<FormControl>
 				<InputLabel id='select-label'>Сортировка</InputLabel>
 				<Select
 					labelId='select-label'
