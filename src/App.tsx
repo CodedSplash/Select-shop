@@ -15,14 +15,23 @@ import { createPortal } from 'react-dom'
 import useSearch from './hooks/useSearch.ts'
 import useSortProducts from './hooks/useSortProducts.ts'
 import { sortTypeModel } from './models/SortType.model.ts'
+import FilteredRatingProducts from './components/FilteredRatingProducts/FilteredRatingProducts.tsx'
+import { FiltereRatingModel } from './models/FilteredRating.model.ts'
+import useFilteredRatingProducts from './hooks/useFilteredRatingProducts.ts'
 
 const App: FC = () => {
 	const [inputSearch, setInputSearch] = useState('')
 	const [sortType, setSortType] = useState<sortTypeModel>('title')
+	const [filteredRatingType, setFilteredRatingType] =
+		useState<FiltereRatingModel>('all')
 
 	const { products, error, loading } = useGetProducts()
 	const filteredProducts = useSearch(products, inputSearch)
 	const sortProducts = useSortProducts(filteredProducts, sortType)
+	const filteredRatingProducts = useFilteredRatingProducts(
+		sortProducts,
+		filteredRatingType,
+	)
 
 	const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputSearch(event.target.value)
@@ -30,6 +39,10 @@ const App: FC = () => {
 
 	const handleSortType = (event: SelectChangeEvent) => {
 		setSortType(event.target.value as sortTypeModel)
+	}
+
+	const handleFilteredRatingType = (event: SelectChangeEvent) => {
+		setFilteredRatingType(event.target.value as FiltereRatingModel)
 	}
 
 	return (
@@ -82,8 +95,12 @@ const App: FC = () => {
 								sortTypeValue={sortType}
 								handleSortTypeValue={handleSortType}
 							/>
+							<FilteredRatingProducts
+								filteredType={filteredRatingType}
+								handleFilteredRating={handleFilteredRatingType}
+							/>
 						</div>
-						<ProductList products={sortProducts} />
+						<ProductList products={filteredRatingProducts} />
 					</>
 				)}
 			</Container>
