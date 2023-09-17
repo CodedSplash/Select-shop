@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { IProductCardProps } from './ProductCard.interface.ts'
 import { formatNumberIntoCurrency } from '../../utils/numberIntoCurrency.ts'
 import {
@@ -9,52 +9,76 @@ import {
 	Chip,
 	Typography,
 } from '@mui/material'
+import { createPortal } from 'react-dom'
+import ModalProduct from '../ModalProduct/ModalProduct.tsx'
 
 const ProductCard: FC<IProductCardProps> = ({ product }) => {
+	const [isOpen, setIsOpen] = useState(false)
+
+	const handleClose = () => {
+		setIsOpen(false)
+	}
+
+	const handelOpen = () => {
+		setIsOpen(true)
+	}
+
 	return (
-		<Card
-			sx={{
-				display: 'flex',
-				alignItems: 'stretch',
-				flexDirection: 'column',
-				width: '100%',
-			}}
-		>
-			<CardActionArea
+		<>
+			{createPortal(
+				<ModalProduct
+					product={product}
+					open={isOpen}
+					handleClose={handleClose}
+				/>,
+				document.body,
+			)}
+
+			<Card
 				sx={{
-					height: '100%',
 					display: 'flex',
+					alignItems: 'stretch',
 					flexDirection: 'column',
-					justifyContent: 'flex-start',
-					alignItems: 'flex-start',
+					width: '100%',
 				}}
 			>
-				<CardMedia
-					component={'img'}
-					height={300}
-					image={product.image.toString()}
-					alt={product.title}
+				<CardActionArea
 					sx={{
-						objectFit: 'contain',
-					}}
-				/>
-				<CardContent
-					sx={{
+						height: '100%',
 						display: 'flex',
-						justifyContent: 'space-between',
-						width: 'calc(100% - 32px)',
+						flexDirection: 'column',
+						justifyContent: 'flex-start',
+						alignItems: 'flex-start',
 					}}
+					onClick={handelOpen}
 				>
-					<Typography variant={'subtitle2'} component={'div'} pr={8}>
-						{product.title}
-					</Typography>
-					<Chip
-						label={formatNumberIntoCurrency(product.price)}
-						color={'primary'}
+					<CardMedia
+						component={'img'}
+						height={300}
+						image={product.image.toString()}
+						alt={product.title}
+						sx={{
+							objectFit: 'contain',
+						}}
 					/>
-				</CardContent>
-			</CardActionArea>
-		</Card>
+					<CardContent
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							width: 'calc(100% - 32px)',
+						}}
+					>
+						<Typography variant={'subtitle2'} component={'div'} pr={8}>
+							{product.title}
+						</Typography>
+						<Chip
+							label={formatNumberIntoCurrency(product.price)}
+							color={'primary'}
+						/>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+		</>
 	)
 }
 
