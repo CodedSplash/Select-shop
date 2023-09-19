@@ -17,6 +17,7 @@ import StarIcon from '@mui/icons-material/Star'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { IModalProductProps } from './ModalProduct.interface'
 import { CartProductsDataContext } from '../../contexts/CartProductsContext'
+import { formatNumberIntoCurrency } from '../../utils/numberIntoCurrency'
 
 const ModalProduct: FC<IModalProductProps> = ({
 	product,
@@ -84,32 +85,37 @@ const ModalProduct: FC<IModalProductProps> = ({
 								/>
 							</Grid>
 							<Grid item xs={7}>
-								<Typography variant={'h5'} sx={{ marginBottom: 0.5 }}>
-									{product.title}
-								</Typography>
-								<Typography gutterBottom variant={'subtitle2'}>
-									Категория: {product.category}
-								</Typography>
-								<Stack
-									direction={'row'}
-									alignItems={'center'}
-									spacing={0.5}
-									sx={{ marginBottom: '15px' }}
-								>
-									<StarIcon fontSize={'medium'} sx={{ color: '#FFC659' }} />
-									{product.rating.rate}
-									<Box sx={{ fontSize: '12px', letterSpacing: '0.5px' }}>
-										({product.rating.count})
-									</Box>
+								<Stack direction={'column'} alignItems={'start'}>
+									<Typography variant={'h5'} sx={{ marginBottom: 0.5 }}>
+										{product.title}
+									</Typography>
+									<Typography gutterBottom variant={'subtitle2'}>
+										Категория: {product.category}
+									</Typography>
+									<Stack
+										direction={'row'}
+										alignItems={'center'}
+										spacing={0.5}
+										sx={{ marginBottom: '6px' }}
+									>
+										<StarIcon fontSize={'medium'} sx={{ color: '#FFC659' }} />
+										{product.rating.rate}
+										<Box sx={{ fontSize: '12px', letterSpacing: '0.5px' }}>
+											({product.rating.count})
+										</Box>
+									</Stack>
+									<Typography variant={'h6'} sx={{ marginBottom: 1 }}>
+										{formatNumberIntoCurrency(product.price)}
+									</Typography>
+									<Button
+										onClick={handleAddProduct}
+										variant='contained'
+										color='success'
+										startIcon={<ShoppingCartIcon />}
+									>
+										Добавить в корзину
+									</Button>
 								</Stack>
-								<Button
-									onClick={handleAddProduct}
-									variant='contained'
-									color='success'
-									startIcon={<ShoppingCartIcon />}
-								>
-									Добавить в корзину
-								</Button>
 							</Grid>
 						</Grid>
 						<Grid container direction={'column'}>
