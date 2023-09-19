@@ -18,12 +18,16 @@ import { sortTypeModel } from './models/SortType.model.ts'
 import FilteredRatingProducts from './components/FilteredRatingProducts/FilteredRatingProducts.tsx'
 import { FiltereRatingModel } from './models/FilteredRating.model.ts'
 import useFilteredRatingProducts from './hooks/useFilteredRatingProducts.ts'
+import { ICart } from './models/Cart.interface.ts'
+import Cart from './components/Cart/Cart.tsx'
+import { IProduct } from './models/Product.interface.ts'
 
 const App: FC = () => {
 	const [inputSearch, setInputSearch] = useState('')
 	const [sortType, setSortType] = useState<sortTypeModel>('title')
 	const [filteredRatingType, setFilteredRatingType] =
 		useState<FiltereRatingModel>('all')
+	const [cartProducts, setCartProducts] = useState<ICart[]>([])
 
 	const { products, error, loading } = useGetProducts()
 	const filteredProducts = useSearch(products, inputSearch)
@@ -43,6 +47,85 @@ const App: FC = () => {
 
 	const handleFilteredRatingType = (event: SelectChangeEvent) => {
 		setFilteredRatingType(event.target.value as FiltereRatingModel)
+	}
+
+	const handleCartProducts = (product: IProduct) => {
+		let isFind = false
+
+		cartProducts.forEach((cartProduct, index) => {
+			if (cartProduct.product.id === product.id) {
+				isFind = true
+
+				const newCartProduct: ICart = {
+					product,
+					quantity: cartProduct.quantity + 1,
+					totalPrice: cartProduct.totalPrice + cartProduct.product.price,
+				}
+
+				setCartProducts((prev) => {
+					const newArray = [...prev]
+
+					newArray[index] = newCartProduct
+
+					return newArray
+				})
+			}
+		})
+
+		if (!isFind) {
+			const newCartProduct: ICart = {
+				product,
+				quantity: 1,
+				totalPrice: product.price,
+			}
+
+			setCartProducts((prev) => [...prev, newCartProduct])
+		}
+	}
+
+	const handlePlusCartProduct = (cartProduct: ICart) => {
+		const index = cartProducts.indexOf(cartProduct)
+
+		const newCartProduct: ICart = {
+			product: cartProduct.product,
+			quantity: cartProduct.quantity + 1,
+			totalPrice: cartProduct.totalPrice + cartProduct.product.price,
+		}
+
+		setCartProducts((prev) => {
+			const newArray = [...prev]
+
+			newArray[index] = newCartProduct
+
+			return newArray
+		})
+	}
+
+	const handleMinusCartProduct = (cartProduct: ICart) => {
+		const index = cartProducts.indexOf(cartProduct)
+
+		const newCartProduct: ICart = {
+			product: cartProduct.product,
+			quantity: cartProduct.quantity === 1 ? 1 : cartProduct.quantity - 1,
+			totalPrice:
+				cartProduct.quantity === 1
+					? cartProduct.product.price
+					: cartProduct.totalPrice - cartProduct.product.price,
+		}
+
+		setCartProducts((prev) => {
+			const newArray = [...prev]
+
+			newArray[index] = newCartProduct
+
+			return newArray
+		})
+	}
+
+	const handleDeleteCartProduct = (cartProduct: ICart) => {
+		setCartProducts((prev) =>
+			prev.filter((product) => cartProduct.product.id !== product.product.id),
+		)
 	}
 
 	return (
@@ -81,6 +164,13 @@ const App: FC = () => {
 					document.body,
 				)}
 
+			<Cart
+				cartProducts={cartProducts}
+				handlePlusCartProduct={handlePlusCartProduct}
+				handleMinusCartProduct={handleMinusCartProduct}
+				handleDeleteCartProduct={handleDeleteCartProduct}
+			/>
+
 			<Container
 				maxWidth={'md'}
 				sx={{ paddingTop: '15px', paddingBottom: '15px' }}
@@ -100,7 +190,10 @@ const App: FC = () => {
 								handleFilteredRating={handleFilteredRatingType}
 							/>
 						</div>
-						<ProductList products={filteredRatingProducts} />
+						<ProductList
+							products={filteredRatingProducts}
+							addProduct={handleCartProducts}
+						/>
 					</>
 				)}
 			</Container>

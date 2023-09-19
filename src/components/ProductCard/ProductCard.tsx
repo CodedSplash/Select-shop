@@ -12,7 +12,7 @@ import {
 import { createPortal } from 'react-dom'
 import ModalProduct from '../ModalProduct/ModalProduct.tsx'
 
-const ProductCard: FC<IProductCardProps> = ({ product }) => {
+const ProductCard: FC<IProductCardProps> = ({ product, addProduct }) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const handleClose = () => {
@@ -30,6 +30,7 @@ const ProductCard: FC<IProductCardProps> = ({ product }) => {
 					product={product}
 					open={isOpen}
 					handleClose={handleClose}
+					addProduct={addProduct}
 				/>,
 				document.body,
 			)}

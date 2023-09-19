@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import {
 	Box,
 	Button,
@@ -8,6 +8,7 @@ import {
 	Divider,
 	Grid,
 	IconButton,
+	Snackbar,
 	Stack,
 	Typography,
 } from '@mui/material'
@@ -20,81 +21,108 @@ const ModalProduct: FC<IModalProductProps> = ({
 	product,
 	handleClose,
 	open,
+	addProduct,
 }) => {
+	const [openSnackbar, setOpenSnackbar] = useState(false)
+
+	const handleAddProduct = () => {
+		addProduct(product)
+		handleOpenSnackbar()
+	}
+
+	const handleCloseSnackbar = () => {
+		setOpenSnackbar(false)
+	}
+
+	const handleOpenSnackbar = () => {
+		setOpenSnackbar(true)
+	}
+
 	return (
-		<Dialog
-			fullWidth={true}
-			maxWidth={'md'}
-			open={open}
-			onClose={handleClose}
-			aria-labelledby='product-dialog-title'
-		>
-			<DialogTitle sx={{ m: 0, p: 2 }} id='product-dialog-title'>
-				Карточка товара
-			</DialogTitle>
-			<IconButton
-				aria-label='закрыть'
-				onClick={handleClose}
-				sx={{
-					position: 'absolute',
-					right: 8,
-					top: 8,
-					color: 'grey',
-				}}
+		<>
+			<Snackbar
+				anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+				open={openSnackbar}
+				onClose={handleCloseSnackbar}
+				message='Товар добавлен в корзину'
+				key={'bottom' + 'left'}
+			/>
+
+			<Dialog
+				fullWidth={true}
+				maxWidth={'md'}
+				open={open}
+				onClose={handleClose}
+				aria-labelledby='product-dialog-title'
 			>
-				<CloseIcon />
-			</IconButton>
-			<DialogContent dividers>
-				<Stack direction={'column'} spacing={3}>
-					<Grid container direction={'row'} columnGap={4} wrap={'nowrap'}>
-						<Grid item xs={5}>
-							<Box
-								component={'img'}
-								src={product.image.toString()}
-								alt={product.title}
-								sx={{ objectFit: 'contain', width: '100%', height: 270 }}
-							/>
+				<DialogTitle sx={{ m: 0, p: 2 }} id='product-dialog-title'>
+					Карточка товара
+				</DialogTitle>
+				<IconButton
+					aria-label='закрыть'
+					onClick={handleClose}
+					sx={{
+						position: 'absolute',
+						right: 8,
+						top: 8,
+						color: 'grey',
+					}}
+				>
+					<CloseIcon />
+				</IconButton>
+				<DialogContent dividers>
+					<Stack direction={'column'} spacing={3}>
+						<Grid container direction={'row'} columnGap={4} wrap={'nowrap'}>
+							<Grid item xs={5}>
+								<Box
+									component={'img'}
+									src={product.image.toString()}
+									alt={product.title}
+									sx={{ objectFit: 'contain', width: '100%', height: 270 }}
+								/>
+							</Grid>
+							<Grid item xs={7}>
+								<Typography variant={'h5'} sx={{ marginBottom: 0.5 }}>
+									{product.title}
+								</Typography>
+								<Typography gutterBottom variant={'subtitle2'}>
+									Категория: {product.category}
+								</Typography>
+								<Stack
+									direction={'row'}
+									alignItems={'center'}
+									spacing={0.5}
+									sx={{ marginBottom: '15px' }}
+								>
+									<StarIcon fontSize={'medium'} sx={{ color: '#FFC659' }} />
+									{product.rating.rate}
+									<Box sx={{ fontSize: '12px', letterSpacing: '0.5px' }}>
+										({product.rating.count})
+									</Box>
+								</Stack>
+								<Button
+									onClick={handleAddProduct}
+									variant='contained'
+									color='success'
+									startIcon={<ShoppingCartIcon />}
+								>
+									Добавить в корзину
+								</Button>
+							</Grid>
 						</Grid>
-						<Grid item xs={7}>
-							<Typography variant={'h5'} sx={{ marginBottom: 0.5 }}>
-								{product.title}
+						<Grid container direction={'column'}>
+							<Typography variant={'h6'} component={'div'}>
+								Описание
 							</Typography>
-							<Typography gutterBottom variant={'subtitle2'}>
-								Категория: {product.category}
+							<Divider />
+							<Typography variant={'body1'} sx={{ paddingTop: '6px' }}>
+								{product.description}
 							</Typography>
-							<Stack
-								direction={'row'}
-								alignItems={'center'}
-								spacing={0.5}
-								sx={{ marginBottom: '15px' }}
-							>
-								<StarIcon fontSize={'medium'} sx={{ color: '#FFC659' }} />
-								{product.rating.rate}
-								<Box sx={{ fontSize: '12px', letterSpacing: '0.5px' }}>
-									({product.rating.count})
-								</Box>
-							</Stack>
-							<Button
-								variant='contained'
-								color='success'
-								startIcon={<ShoppingCartIcon />}
-							>
-								Добавить в корзину
-							</Button>
 						</Grid>
-					</Grid>
-					<Grid container direction={'column'}>
-						<Typography variant={'h6'} component={'div'}>
-							Описание
-						</Typography>
-						<Divider />
-						<Typography variant={'body1'} sx={{ paddingTop: '6px' }}>
-							{product.description}
-						</Typography>
-					</Grid>
-				</Stack>
-			</DialogContent>
-		</Dialog>
+					</Stack>
+				</DialogContent>
+			</Dialog>
+		</>
 	)
 }
 export default ModalProduct
