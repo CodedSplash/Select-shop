@@ -63,7 +63,7 @@ const ProductCard: FC<IProductCardProps> = ({ product }) => {
 							objectFit: 'contain',
 						}}
 					/>
-					<CardContent>
+					<CardContent sx={{ width: 'calc(100% - 32px)' }}>
 						<Box
 							sx={{
 								display: 'flex',
