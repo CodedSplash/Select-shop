@@ -1,9 +1,8 @@
 import { FC } from 'react'
-import { Container } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import ProductList from './components/ProductList/ProductList.tsx'
 import ProductSearch from './components/ProductSearch/ProductSearch.tsx'
 import SortProducts from './components/sortProducts/SortProducts.tsx'
-import styles from './App.module.css'
 import Cart from './components/Cart/Cart.tsx'
 import Error from './components/Error/Error.tsx'
 import AppContexts from './contexts/AppContexts.tsx'
@@ -24,13 +23,17 @@ const App: FC = () => {
 					maxWidth={'md'}
 					sx={{ paddingTop: '15px', paddingBottom: '15px' }}
 				>
-					<div className={styles.search}>
+					<Box
+						sx={{ maxWidth: '75%', margin: '0 auto', paddingBottom: '20px' }}
+					>
 						<ProductSearch />
-					</div>
-					<div className={styles.sort}>
+					</Box>
+					<Box
+						sx={{ display: 'flex', columnGap: '15px', paddingBottom: '15px' }}
+					>
 						<SortProducts />
 						<FilteredRatingProducts />
-					</div>
+					</Box>
 					<ProductList />
 				</Container>
 			</AppContexts>
