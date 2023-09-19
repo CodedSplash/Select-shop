@@ -4,5 +4,4 @@ export interface IModalProductProps {
 	product: IProduct
 	handleClose: () => void
 	open: boolean
-	addProduct: (product: IProduct) => void
 }

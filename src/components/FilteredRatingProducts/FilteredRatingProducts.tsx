@@ -1,11 +1,12 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { IFilteredRatingProductsProps } from './FilteredRatingProducts.interface.ts'
+import { FiltersProductsContext } from '../../contexts/FiltersContext'
 
-const FilteredRatingProducts: FC<IFilteredRatingProductsProps> = ({
-	handleFilteredRating,
-	filteredType,
-}) => {
+const FilteredRatingProducts: FC = () => {
+	const { filteredRatingType, handleFilteredRatingType } = useContext(
+		FiltersProductsContext,
+	)
+
 	return (
 		<>
 			<FormControl>
@@ -13,9 +14,9 @@ const FilteredRatingProducts: FC<IFilteredRatingProductsProps> = ({
 				<Select
 					labelId='filtered-select-label'
 					id='filtered-simple-select'
-					value={filteredType}
+					value={filteredRatingType}
 					label='Фильтровать'
-					onChange={handleFilteredRating}
+					onChange={handleFilteredRatingType}
 				>
 					<MenuItem value={'all'}>Показать все</MenuItem>
 					<MenuItem value={'rate1'}>По рейтингу 1</MenuItem>

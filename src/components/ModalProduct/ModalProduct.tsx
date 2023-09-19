@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import {
 	Box,
 	Button,
@@ -16,17 +16,19 @@ import CloseIcon from '@mui/icons-material/Close'
 import StarIcon from '@mui/icons-material/Star'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { IModalProductProps } from './ModalProduct.interface'
+import { CartProductsDataContext } from '../../contexts/CartProductsContext'
 
 const ModalProduct: FC<IModalProductProps> = ({
 	product,
 	handleClose,
 	open,
-	addProduct,
 }) => {
 	const [openSnackbar, setOpenSnackbar] = useState(false)
 
+	const { handleCartProducts } = useContext(CartProductsDataContext)
+
 	const handleAddProduct = () => {
-		addProduct(product)
+		handleCartProducts(product)
 		handleOpenSnackbar()
 	}
 

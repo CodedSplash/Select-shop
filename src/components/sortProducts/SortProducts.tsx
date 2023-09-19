@@ -1,11 +1,10 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { ISortProductsProps } from './SortProducts.interface.ts'
+import { FiltersProductsContext } from '../../contexts/FiltersContext'
 
-const SortProducts: FC<ISortProductsProps> = ({
-	sortTypeValue,
-	handleSortTypeValue,
-}) => {
+const SortProducts: FC = () => {
+	const { sortType, handleSortType } = useContext(FiltersProductsContext)
+
 	return (
 		<>
 			<FormControl>
@@ -13,9 +12,9 @@ const SortProducts: FC<ISortProductsProps> = ({
 				<Select
 					labelId='select-label'
 					id='simple-select'
-					value={sortTypeValue}
+					value={sortType}
 					label='Сортировка'
-					onChange={handleSortTypeValue}
+					onChange={handleSortType}
 				>
 					<MenuItem value={'title'}>По заголовку</MenuItem>
 					<MenuItem value={'highPrice'}>По высокой цене</MenuItem>

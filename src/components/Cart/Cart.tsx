@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import {
 	Box,
 	Button,
@@ -8,18 +8,20 @@ import {
 	Typography,
 } from '@mui/material'
 import { ShoppingCart } from '@mui/icons-material/'
-import { ICartProps } from './Cart.interface.ts'
 import CartItem from '../CartItem/CartItem.tsx'
 import { formatNumberIntoCurrency } from '../../utils/numberIntoCurrency.ts'
 import { totalPrice } from '../../utils/totalPrice.ts'
+import { CartProductsDataContext } from '../../contexts/CartProductsContext.tsx'
 
-const Cart: FC<ICartProps> = ({
-	cartProducts,
-	handleDeleteCartProduct,
-	handleMinusCartProduct,
-	handlePlusCartProduct,
-}) => {
+const Cart: FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
+
+	const {
+		cartProducts,
+		handlePlusCartProduct,
+		handleMinusCartProduct,
+		handleDeleteCartProduct,
+	} = useContext(CartProductsDataContext)
 
 	const handleClose = () => {
 		setIsOpen(false)
