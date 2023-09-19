@@ -2,11 +2,13 @@ import { FC, useState } from 'react'
 import { IProductCardProps } from './ProductCard.interface.ts'
 import { formatNumberIntoCurrency } from '../../utils/numberIntoCurrency.ts'
 import {
+	Box,
 	Card,
 	CardActionArea,
 	CardContent,
 	CardMedia,
 	Chip,
+	Rating,
 	Typography,
 } from '@mui/material'
 import { createPortal } from 'react-dom'
@@ -61,19 +63,26 @@ const ProductCard: FC<IProductCardProps> = ({ product }) => {
 							objectFit: 'contain',
 						}}
 					/>
-					<CardContent
-						sx={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							width: 'calc(100% - 32px)',
-						}}
-					>
-						<Typography variant={'subtitle2'} component={'div'} pr={8}>
-							{product.title}
-						</Typography>
-						<Chip
-							label={formatNumberIntoCurrency(product.price)}
-							color={'primary'}
+					<CardContent>
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								width: '100%',
+							}}
+						>
+							<Typography variant={'subtitle2'} component={'div'} pr={8}>
+								{product.title}
+							</Typography>
+							<Chip
+								label={formatNumberIntoCurrency(product.price)}
+								color={'primary'}
+							/>
+						</Box>
+						<Rating
+							name='read-only'
+							value={Math.floor(product.rating.rate)}
+							readOnly
 						/>
 					</CardContent>
 				</CardActionArea>
