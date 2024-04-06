@@ -1,22 +1,22 @@
 <br/>
 <p align="center">
-  <a href="https://github.com/CodedSplash/Product-list">
+  <a href="https://github.com/CodedSplash/Select-shop">
     <img src="https://i.ibb.co/P4cD9Ns/Product-list-logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Product-list</h3>
+  <h3 align="center">Select shop</h3>
 
   <p align="center">
     Pet project where you can search, sort and add products to the cart.
     <br/>
     <br/>
-    <a href="https://codedsplash.github.io/Product-list/">View Demo</a>
+    <a href="https://codedsplash.github.io/Select-shop/">View Demo</a>
     .
-    <a href="https://github.com/CodedSplash/Product-list/issues">Request Feature</a>
+    <a href="https://github.com/CodedSplash/Select-shop/issues">Request Feature</a>
   </p>
 </p>
 
-![Contributors](https://img.shields.io/github/contributors/CodedSplash/Product-list?color=dark-green) ![Issues](https://img.shields.io/github/issues/CodedSplash/Product-list) ![License](https://img.shields.io/github/license/CodedSplash/Product-list)
+![Contributors](https://img.shields.io/github/contributors/CodedSplash/Select-shop?color=dark-green) ![Issues](https://img.shields.io/github/issues/CodedSplash/Select-shop) ![License](https://img.shields.io/github/license/CodedSplash/Select-shop)
 
 ## Table Of Contents
 
@@ -34,8 +34,8 @@ A shopping cart is implemented in this project. You can add products to it and s
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/CodedSplash/Product-list/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/CodedSplash/Select-shop/blob/main/LICENSE.md) for more information.
 
 ## Authors
 
-- **Shchukin Ivan** - _Comp Sci Student_ - [Shchukin Ivan](https://github.com/CodedSplash) - _Creator of the pet project Product list_
+- **Shchukin Ivan** - _Comp Sci Student_ - [Shchukin Ivan](https://github.com/CodedSplash) - _Creator of the pet project Select shop_
